@@ -11,8 +11,8 @@ import Foundation
 struct WeatherData: Codable {
     let name: String
     let id: Int
-    let timezone: Int
-    let cod: Int
+//    let timezone: Int
+//    let cod: Int
     let main: Main
     let weather: [Weather]
 }

@@ -33,6 +33,9 @@
                                                 </constraints>
                                                 <color key="tintColor" name="Weather Color"/>
                                                 <state key="normal" backgroundImage="location.circle.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="currentLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tQ3-PR-ioH"/>
+                                                </connections>
                                             </button>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="right" clearsOnBeginEditing="YES" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="2eh-wL-W34">
                                                 <rect key="frame" x="50" y="0.0" width="235" height="40"/>
@@ -136,7 +139,7 @@
         <image name="location.circle.fill" catalog="system" width="128" height="121"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <namedColor name="Weather Color">
-            <color red="0.1082970873" green="0.2627018988" blue="0.2829732895" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.1080000028014183" green="0.2630000114440918" blue="0.28299999237060547" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

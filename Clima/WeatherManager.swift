@@ -18,11 +18,17 @@ class WeatherManager {
     
     var  delegate : WeatherManagerDelegate?
     
-     func fetchWeatherData(cityName: String) {
+     func fetchWeatherDataWithCity(cityName: String) {
         let urlString = "\(weatherURL)&q=\(cityName)"
         self.performRequest(with: urlString)
     
     }
+    
+    func fetchWeatherDataWithLocation(lat: Double, lon: Double) {
+         let urlString = "\(weatherURL)&lat=\(lat)&lon=\(lon)"
+         self.performRequest(with: urlString)
+     
+     }
     
     func performRequest(with urlString: String){
         if let url = URL(string: urlString) {

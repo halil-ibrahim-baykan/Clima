@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class WeatherViewController: UIViewController {
     
@@ -14,28 +15,57 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
+
     
     var weatherManager = WeatherManager()
     
+    var locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         weatherManager.delegate = self
         searchTextField.delegate = self
+        locationManager.delegate = self
+        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+        
+        
         
     }
+    @IBAction func currentLocationButtonPressed(_ sender: UIButton) {
+        
+        locationManager.requestLocation()
+
+    }
     
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension WeatherViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            locationManager.stopUpdatingLocation()
+            let lat = Double( location.coordinate.latitude)
+            let lon = Double(location.coordinate.longitude)
+         
+            weatherManager.fetchWeatherDataWithLocation(lat: lat, lon: lon)
+
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
 }
 
 // MARK: - UITextFieldDelegate
 
 extension WeatherViewController: UITextFieldDelegate {
     @IBAction func searchPressed(_ sender: UIButton) {
-        
-        searchTextField.endEditing(true)
-        
+
         guard let city = searchTextField.text else {return}
-        weatherManager.fetchWeatherData(cityName: city)
+        weatherManager.fetchWeatherDataWithCity(cityName: city)
         
     }
     
