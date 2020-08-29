@@ -2,7 +2,7 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-<a href="https://imgflip.com/gif/4d5abk">via Imgflip</a>
+![4d5abk](https://user-images.githubusercontent.com/48466599/91637845-9c893900-ea0b-11ea-9823-bb081450f513.gif)
 
 ### What is this repository for? ###
 
