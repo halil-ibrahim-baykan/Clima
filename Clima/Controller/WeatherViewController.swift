@@ -8,18 +8,14 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
-  
+class WeatherViewController: UIViewController {
     
-
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
     
     var weatherManager = WeatherManager()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,14 +24,19 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         searchTextField.delegate = self
         
     }
+    
+}
 
+// MARK: - UITextFieldDelegate
+
+extension WeatherViewController: UITextFieldDelegate {
     @IBAction func searchPressed(_ sender: UIButton) {
         
         searchTextField.endEditing(true)
         
         guard let city = searchTextField.text else {return}
         weatherManager.fetchWeatherData(cityName: city)
- 
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -43,28 +44,36 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         return true
     }
     
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        <#code#>
-//    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        searchTextField.text = ""
+    }
     
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField.text != "" {
+            return true
+        }else{
+            textField.placeholder = "Type something.."
+            return false
+        }
+    }
+}
+
+// MARK: - WeatherManagerDelegate
+
+extension WeatherViewController: WeatherManagerDelegate {
     
-    func didUpdateWeather(weather: WeatherModel) {
-        
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async {
-            if let image = UIImage(systemName: weather.conditionString){
-                self.conditionImageView.image = image
-            }
-            
-            self.temperatureLabel.text = weather.tempString
-            self.cityLabel.text = weather.city
-            
-            
-            
+            self.conditionImageView.image = UIImage(systemName: weather.conditionName)
+            self.temperatureLabel.text = weather.tempretureString
+            self.cityLabel.text = weather.cityName
         }
         
     }
     
-    
-    
+    func didFailWithError(error: Error) {
+        print(error)
+    }
 }
+
 
